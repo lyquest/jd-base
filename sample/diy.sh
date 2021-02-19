@@ -9,7 +9,6 @@ done
 ##############################作者昵称（必填）##############################
 # 使用空格隔开
 author_list="yangtingxiao whyour"
-
 ##############################作者脚本地址URL（必填）##############################
 # 例如：https://raw.githubusercontent.com/whyour/hundun/master/quanx/jx_nc.js
 # 1.从作者库中随意挑选一个脚本地址，每个作者的地址添加一个即可，无须重复添加
@@ -24,7 +23,6 @@ scripts_base_url_2=https://raw.sevencdn.com/whyour/hundun/master/quanx/
 my_scripts_list_1="jd_lotteryMachine.js"
 my_scripts_list_2="jd_collectBlueCoin.js ddxw.js"
 
-
 ##############################随机函数##########################################
 rand(){
     min=$1
@@ -32,12 +30,8 @@ rand(){
     num=$(cat /proc/sys/kernel/random/uuid | cksum | awk -F ' ' '{print $1}')
     echo $(($num%$max+$min))
 }
-
-
-
 cd $ScriptsDir   # 在 git_pull.sh 中已经定义 ScriptsDir 此变量，diy.sh 由 git_pull.sh 调用，因此可以直接使用此变量
 index=1
-
 for author in $author_list
 do
   echo -e "开始下载 $author 的脚本"
@@ -55,7 +49,7 @@ do
     wget -q --no-check-certificate $url -O $name.new
 
     # 如果上一步下载没问题，才去掉后缀".new"，如果上一步下载有问题，就保留之前正常下载的版本
-    # 查找脚本内cron关键字并添加到crontab.list
+    # 随机添加个cron到crontab.list
     if [ $? -eq 0 ]; then
       mv -f $name.new $name
       echo -e "更新 $name 完成...\n"

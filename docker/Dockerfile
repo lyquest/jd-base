@@ -24,7 +24,10 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
                              tzdata \
                              perl \
                              openssl \
+                             python3-dev \
+                             make \
     && rm -rf /var/cache/apk/* \
+    && pip3 install --upgrade pip \
     && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" > /etc/timezone \
     && git clone -b ${JD_BASE_BRANCH} ${JD_BASE_URL} ${JD_DIR} \
