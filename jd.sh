@@ -53,7 +53,34 @@ function Combin_Sub {
     done
     Tmp1=$1$i
     Tmp2=${!Tmp1}
-    CombinAll="${CombinAll}&${Tmp2}"
+    case $# in
+      1)
+        CombinAll="${CombinAll}&${Tmp2}"
+        ;;
+      2)
+        CombinAll="${CombinAll}&${Tmp2}@$2"
+        ;;
+      3)
+        if [ $(($i % 2)) -eq 1 ]; then
+          CombinAll="${CombinAll}&${Tmp2}@$2"
+        else
+          CombinAll="${CombinAll}&${Tmp2}@$3"
+        fi
+        ;;
+      4)
+        case $(($i % 3)) in
+          1)
+            CombinAll="${CombinAll}&${Tmp2}@$2"
+            ;;
+          2)
+            CombinAll="${CombinAll}&${Tmp2}@$3"
+            ;;
+          0)
+            CombinAll="${CombinAll}&${Tmp2}@$4"
+            ;;
+        esac
+        ;;
+    esac
   done
   echo ${CombinAll} | perl -pe "{s|^&||; s|^@+||; s|&@|&|g; s|@+|@|g}"
 }
@@ -72,14 +99,10 @@ function Combin_All {
   export JXNCTOKENS=$(Combin_Sub TokenJxnc)
   export BOOKSHOP_SHARECODES=$(Combin_Sub ForOtherBookShop)
   export JD_CASH_SHARECODES=$(Combin_Sub ForOtherCash)
-  export JDNIAN_SHARECODES=$(Combin_Sub ForOtherNian)
-  export JDNIANPK_SHARECODES=$(Combin_Sub ForOtherNianPk)
-  export JDSXSY_SHARECODES=$(Combin_Sub ForOtherImmortal)
+
   export JDSGMH_SHARECODES=$(Combin_Sub ForOtherSgmh)
-  export JSMOBILEFESTIVAL_SHARECODES=$(Combin_Sub ForOtherJdMobileFestival)
-  export JD818_SHARECODES=$(Combin_Sub ForOtherJd818)
-  export JDNY_SHARECODES=$(Combin_Sub ForOtherNY)
-  export JDGLOBAL_SHARECODES=$(Combin_Sub ForOtherGLOBAL)
+  #惊喜财富岛(jd_cfd.js)
+  export JDCFD_SHARECODES=$(Combin_Sub ForOtherJdcfd)
 }
 
 ## 转换JD_BEAN_SIGN_STOP_NOTIFY或JD_BEAN_SIGN_NOTIFY_SIMPLE
